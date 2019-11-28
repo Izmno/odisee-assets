@@ -18,7 +18,7 @@
 \newdimen\odsOWidth 
 \odsOWidth\dimexpr\dimexpr\odsLogoWidth*21\relax/94\relax
 
-
+% 
 \def\numdivisions#1#2#3{%
     \newcount\divs%
     \divs\numexpr#2/\dimexpr#3\relax\relax%
@@ -30,7 +30,12 @@
 
 % Vertical rule of height \vsize and width #1
 % Has negative whitespace on the left and right equal to #1/2
-\def\centvrule#1{\def\hds{\hskip\dimexpr-#1/2\relax}\hds\rule{#1}{\vsize}\hds\relax}
+%
+% @param #1 : total width of the whitespace and rule
+\def\centvrule#1{%
+    \def\hds{\hskip\dimexpr-#1/2\relax}%
+    \hds\rule{#1}{\vsize}\hds\relax%
+}
 
 \begin{document}
 
