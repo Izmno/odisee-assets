@@ -1,14 +1,28 @@
-
 \documentclass{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
+\usepackage{xcolor}
 
 \usepackage{tikz}
 
-\usepackage[headheight = 2.98cm, includehead, margin = 1cm ]{geometry}
-\pagestyle{empty}
+\usepackage[a4paper, headheight = 2.98cm, includehead, margin = 1cm]{geometry}
 
+% Define some colors
+\definecolor{nachtblauw}{HTML}{1F416B}
+\definecolor{helderwit}{HTML}{FFFFFF}
+\definecolor{printerzwart}{HTML}{181716}
+\definecolor{mistblauw}{HTML}{D3DDF2}
+\definecolor{muntgroen}{HTML}{3CB497}
+\definecolor{stormblauw}{HTML}{00639C}
+\definecolor{warmrood}{HTML}{E73F16}
+
+
+% TODO: I want to use the eps version, 
+% but it has unwanted whitespace
+% --> Crop the eps image
+\newtoks\odsLogoPath
+\odsLogoPath{img/odslogo.jpg}
 
 \newdimen\odsLogoWidth
 \odsLogoWidth35mm\relax
@@ -18,13 +32,23 @@
 \newdimen\odsOWidth 
 \odsOWidth\dimexpr\dimexpr\odsLogoWidth*21\relax/94\relax
 
-% 
+% Find the maximum amount of times dimen #3 fits in dimen #2
+% Store the result in count #1
+%
+% @param #1: count register for output
+% @param #2: dimension register
+% @param #3: dimension register
 \def\numdivisions#1#2#3{%
     \newcount\divs%
     \divs\numexpr#2/\dimexpr#3\relax\relax%
     % TeX rounds result of division to nearest integer
-    % We want floor division, so we advance the result by -1 if it was rounded up
-    \ifnum\numexpr\divs*\dimexpr#3\relax\relax>\numexpr#2\relax\advance\divs by -1\fi%
+    % We want floor division here, 
+    %so we advance the result by -1 if it was rounded up
+    \ifnum%
+        \numexpr\divs*\dimexpr#3\relax\relax%
+        >\numexpr#2\relax%
+            \advance\divs by -1%
+    \fi%
     #1\divs\relax%
 }
 
@@ -37,91 +61,102 @@
     \hds\rule{#1}{\vsize}\hds\relax%
 }
 
-\begin{document}
 
-
+% Some calculations for divisions of grid
 \newcount\hdivs
 \newcount\vdivs
 
 \numdivisions{\vdivs}{\textheight}{1cm}
 \numdivisions{\hdivs}{\textwidth}{1cm}
 
+% Some calculations for width of rule
 \newdimen\vrulewidth
 \vrulewidth .4pt\relax
 
-%\advance\vdivs by -1
 
 \makeatletter
-
 % Define header
 % #1 : dimension of available space
 \def\ods@head#1{%
-% Calculate available space
-\newdimen\availableHSize%
-\availableHSize#1%
-% Set width of end section
-\newdimen\endSection%
-\endSection 4cm\relax%
-% Calculate width of mid section
-\newdimen\midSection%
-\expandafter\midSection\dimexpr\availableHSize - \odsLogoWidth - \odsOWidth - \endSection\relax%
-%
-\noindent\hbox to \hsize{\vsize\headheight\relax%
-    \parskip 0pt\relax%
-    \baselineskip 0pt\relax%
-    \noindent\hfill%
-    \includegraphics[width=\odsLogoWidth]{odslogo.jpg}%
-    \hskip\dimexpr\odsOWidth/2\relax\relax%
-    \centvrule{\vrulewidth}%
-    \hskip\dimexpr\odsOWidth/2\relax\relax%
-    \vbox to \vsize{\hsize\midSection\relax%
-        {\large\bfseries \textgreater generic graph paper}\par%
-        \vfil%
-        {\sc\large Name: \leaders\hrule\hfill\hbox{}}\par%
-        \vskip3ex\relax%
-        {\sc\large Project: \leaders\hrule\hfill\hbox{ }}\par%
-        \vskip3ex\relax%
-        {\sc\large Title: \leaders\hrule\hfill\hbox{ }}%
+    % Calculate available space
+    \newdimen\availableHSize%
+    \availableHSize#1%
+    % Set width of end section
+    \newdimen\endSection%
+    \endSection 4cm\relax%
+    % Calculate width of mid section
+    \newdimen\midSection%
+    \expandafter\midSection\dimexpr\availableHSize - \odsLogoWidth - \odsOWidth - \endSection\relax%
+    %
+    \noindent\hbox to \hsize{\vsize\headheight\relax%
+        \parskip 0pt\relax%
+        \baselineskip 0pt\relax%
+        \noindent\hfill%
+        \includegraphics[width=\odsLogoWidth]{\the\odsLogoPath}%
+        \hskip\dimexpr\odsOWidth/2\relax\relax%
+        \centvrule{\vrulewidth}%
+        \hskip\dimexpr\odsOWidth/2\relax\relax%
+        \vbox to \vsize{\hsize\midSection\relax%
+            {\color{mistblauw}\Large\bfseries \textgreater generic graph}\par%
+            \vfil%
+            {\color{nachtblauw}\sc\large Name: %
+                \color{mistblauw}\leaders\hrule\hfill\hbox{}}\par%
+            \vskip3ex\relax%
+            {\color{nachtblauw}\sc\large Project: %
+                \color{mistblauw}\leaders\hrule\hfill\hbox{ }}\par%
+            \vskip3ex\relax%
+            {\color{nachtblauw}\sc\large Title: %
+                \color{mistblauw}\leaders\hrule\hfill\hbox{ }}%
+        }%
+        \vbox to \vsize{\hsize\endSection\relax%
+            \vfill%
+            {\color{mistblauw}\large\sc\rule{0pt}{0pt}\leaders\hrule\hfill\hbox{}}\par%
+            \vskip3ex\relax%
+            {\color{nachtblauw}\sc\large Date: \color{mistblauw}\leaders\hrule\hfill\hbox{ }- \leaders\hrule\hfill\hbox{ }- \leaders\hrule\hfill\hbox{}}\par%
+            \vskip3ex\relax%
+            {\color{nachtblauw}\sc\large Page: \color{mistblauw}\leaders\hrule\hfill\hbox{ }of \leaders\hrule\hfill\hbox{}}\par%
+        }%
+        \hfill%
     }%
-    \vbox to \vsize{\hsize\endSection\relax%
-        \vfill%
-        {\large\sc\rule{0pt}{0pt}\leaders\hrule\hfill\hbox{}}\par%
-        \vskip3ex\relax%
-        {\sc\large Date: \leaders\hrule\hfill\hbox{ }- \leaders\hrule\hfill\hbox{ }- \leaders\hrule\hfill\hbox{}}\par%
-        \vskip3ex\relax%
-        {\sc\large Page: \leaders\hrule\hfill\hbox{ }of \leaders\hrule\hfill\hbox{}}\par%
-    }%
-    \hfill%
-}%
 }
-\newdimen\cmm 
-\cmm 1cm\relax
-\multiply\cmm by 19
 
-\def\@oddhead{\ods@head{\cmm}}
+
+
+
+
+% Create pagestyle
+\def\ps@@odisee{
+    \newdimen\cmm 
+    \cmm 1cm\relax
+    \multiply\cmm by 19\relax
+    \ps@empty\relax
+    \def\@oddhead{\ods@head{\cmm}}
+    \let\@evenhead\@oddhead
+}
+\def\ps@odisee{\ps@@odisee}
+
+% Use pagestyle
+\pagestyle{odisee}
+
 \makeatother
 
-
-
-
+\begin{document}
 % Make sure there is a nondiscardable on first line, and there is no extra white space
-\topskip 0pt\vbox to 0pt{}%
+%\topskip 0pt\vbox to 0pt{}%
 %
 % Center vertically 
-\vfill%
+%\vfill%
 % 
 % Make sure there is no unwanted white space and center horizontally
 \noindent\hfil%
 %
 % Draw the grid 
 \begin{tikzpicture}[x=1cm, y=1cm, semitransparent]
-\draw[step=1mm, line width=0.1mm, black!30!white] (0,0) grid (\hdivs,\vdivs);
-\draw[step=5mm, line width=0.2mm, black!40!white] (0,0) grid (\hdivs,\vdivs);
-\draw[step=1cm, line width=0.3mm, black!90!white] (0,0) grid (\hdivs,\vdivs);
+\draw[step=1mm, line width=.1pt, mistblauw!50!stormblauw] (0,0) grid (\hdivs,\vdivs);
+\draw[step=5mm, line width=.2pt, stormblauw] (0,0) grid (\hdivs,\vdivs);
+\draw[step=1cm, line width=.5pt, nachtblauw] (0,0) grid (\hdivs,\vdivs);
 \end{tikzpicture}%
 %
 % Center horizontally and vertically, end page
-\hfil\vfill\relax\eject
-
-
+\hfil\vfill%
 \end{document}

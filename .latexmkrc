@@ -1,1 +1,1 @@
-$aux_dir = "auxiliary";
+$aux_dir = "./auxiliary";
