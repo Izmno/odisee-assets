@@ -1,0 +1,22 @@
+{
+  "name": "odisee-assets",
+  "version": "1.0.0",
+  "description": "Collection of assets for Odisee University College",
+  "scripts": {
+    "build": "make",
+    "clean": "make clean"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Izmno/odisee-assets.git"
+  },
+  "author": "Simon De Meyere",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Izmno/odisee-assets/issues"
+  },
+  "homepage": "https://github.com/Izmno/odisee-assets#readme",
+  "dependencies": {
+    "source-sans-pro": "^3.6.0"
+  }
+}
