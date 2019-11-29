@@ -1,0 +1,27 @@
+\ProvidesFile{t1ssp.fd}
+    [font definitions for T1/ssp.]
+
+\DeclareFontFamily{T1}{ssp}{}
+
+\DeclareFontShape{T1}{ssp}{m} {n} {<-> sspmn8t }       {}
+\DeclareFontShape{T1}{ssp}{b} {n} {<-> sspbn8t }       {}
+\DeclareFontShape{T1}{ssp}{m} {it}{<-> sspmit8t }      {}
+\DeclareFontShape{T1}{ssp}{b} {it}{<-> sspbit8t }      {}
+
+\DeclareFontShape{T1}{ssp}{m} {sc}{<-> ssub*ssp/b/n} {}
+\DeclareFontShape{T1}{ssp}{m} {sl}{<-> ssub*ssp/m/it}{}
+
+\DeclareFontShape{T1}{ssp}{sb}{n} {<-> ssub*ssp/b/n} {}
+\DeclareFontShape{T1}{ssp}{sb}{sc}{<-> ssub*ssp/b/n} {}
+\DeclareFontShape{T1}{ssp}{sb}{sl}{<-> ssub*ssp/b/it}{}
+\DeclareFontShape{T1}{ssp}{sb}{it}{<-> ssub*ssp/b/it}{}
+
+\DeclareFontShape{T1}{ssp}{b}{sc} {<->ssub*ssp/b/n}  {}
+\DeclareFontShape{T1}{ssp}{b}{sl} {<->ssub*ssp/b/it} {}
+
+\DeclareFontShape{T1}{ssp}{bx}{n} {<->ssub*ssp/b/n}  {}
+\DeclareFontShape{T1}{ssp}{bx}{sc}{<->ssub*ssp/b/n}  {}
+\DeclareFontShape{T1}{ssp}{bx}{sl}{<->ssub*ssp/b/it} {}
+\DeclareFontShape{T1}{ssp}{bx}{it}{<->ssub*ssp/b/it} {}
+
+\endinput

@@ -8,6 +8,12 @@
 
 \usepackage[a4paper, headheight = 2.98cm, includehead, margin = 1cm]{geometry}
 
+% Use the custom fonts
+\usepackage[T1]{fontenc} 
+\pdfmapfile{+SourceSansPro.map}
+\newcommand\odsText[1]{{\usefont{T1}{ssp}{m}{n} #1 }}
+\newcommand\odsTitle[1]{{\usefont{T1}{ssp}{b}{n} #1 }}
+
 % Define some colors
 \definecolor{nachtblauw}{HTML}{1F416B}
 \definecolor{helderwit}{HTML}{FFFFFF}
@@ -141,6 +147,7 @@
 \makeatother
 
 \begin{document}
+\odsTitle{Hallo!}
 % Make sure there is a nondiscardable on first line, and there is no extra white space
 %\topskip 0pt\vbox to 0pt{}%
 %
