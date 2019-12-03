@@ -5,8 +5,9 @@
 \usepackage{xcolor}
 
 \usepackage{tikz}
+\usepackage{pgfplots}
 
-\usepackage[a4paper, headheight = 2.98cm, includehead, margin = 1cm]{geometry}
+\usepackage[a4paper, headheight = 2.98cm, includehead, margin = 2cm]{geometry}
 
 % Use the custom fonts
 \usepackage[T1]{fontenc} 
@@ -102,25 +103,23 @@
         \hskip\dimexpr\odsOWidth/2\relax\relax%
         \centvrule{\vrulewidth}%
         \hskip\dimexpr\odsOWidth/2\relax\relax%
-        \vbox to \vsize{\hsize\midSection\relax%
-            {\color{mistblauw}\Large\bfseries \textgreater generic graph}\par%
+        \vbox to \vsize{\hsize\dimexpr\midSection+\endSection\relax%
+            \odsText{\color{mistblauw}\Large \textgreater generic graph}\par%
             \vfil%
-            {\color{nachtblauw}\sc\large Name: %
+            \odsTitle{\color{nachtblauw}\large Name: %
                 \color{mistblauw}\leaders\hrule\hfill\hbox{}}\par%
             \vskip3ex\relax%
-            {\color{nachtblauw}\sc\large Project: %
-                \color{mistblauw}\leaders\hrule\hfill\hbox{ }}\par%
+            \odsTitle{\color{nachtblauw}\large Project: %
+                \color{mistblauw}\leaders\hrule\hfill%
+                \hbox to \endSection{%
+                    \color{nachtblauw}Date: \color{mistblauw}\leaders\hrule\hfill\hbox{ }/ \leaders\hrule\hfill\hbox{ }/ \leaders\hrule\hfill\hbox{}%
+                }}\par%
             \vskip3ex\relax%
-            {\color{nachtblauw}\sc\large Title: %
-                \color{mistblauw}\leaders\hrule\hfill\hbox{ }}%
-        }%
-        \vbox to \vsize{\hsize\endSection\relax%
-            \vfill%
-            {\color{mistblauw}\large\sc\rule{0pt}{0pt}\leaders\hrule\hfill\hbox{}}\par%
-            \vskip3ex\relax%
-            {\color{nachtblauw}\sc\large Date: \color{mistblauw}\leaders\hrule\hfill\hbox{ }- \leaders\hrule\hfill\hbox{ }- \leaders\hrule\hfill\hbox{}}\par%
-            \vskip3ex\relax%
-            {\color{nachtblauw}\sc\large Page: \color{mistblauw}\leaders\hrule\hfill\hbox{ }of \leaders\hrule\hfill\hbox{}}\par%
+            \odsTitle{\color{nachtblauw}\large Title: %
+                \color{mistblauw}\leaders\hrule\hfill%
+                \hbox to \endSection{%
+                    \color{nachtblauw}Page: \color{mistblauw}\leaders\hrule\hfill\hbox{ }of \leaders\hrule\hfill\hbox{}%
+                }}\par%
         }%
         \hfill%
     }%
@@ -134,7 +133,7 @@
 \def\ps@@odisee{
     \newdimen\cmm 
     \cmm 1cm\relax
-    \multiply\cmm by 19\relax
+    \multiply\cmm by \hdivs\relax
     \ps@empty\relax
     \def\@oddhead{\ods@head{\cmm}}
     \let\@evenhead\@oddhead
@@ -147,8 +146,6 @@
 \makeatother
 
 \begin{document}
-Hallo\par
-\odsTitle{parrr}\par
 % Make sure there is a nondiscardable on first line, and there is no extra white space
 %\topskip 0pt\vbox to 0pt{}%
 %
@@ -167,4 +164,105 @@ Hallo\par
 %
 % Center horizontally and vertically, end page
 \hfil\vfill%
+
+\pagebreak
+\newcount\xdecades
+\xdecades 5\relax
+\newcount\ydecades
+\ydecades 5\relax
+\newdimen\xlogscale
+\xlogscale\textwidth\divide\xlogscale by\xdecades\relax
+\newdimen\ylogscale
+\ylogscale\textheight\divide\ylogscale by \ydecades\relax
+\noindent\hfill
+\begin{tikzpicture}[x=\xlogscale, y=\ylogscale, semitransparent]
+    \foreach \ee in{0,...,\numexpr\xdecades - 1\relax}{
+        \foreach \x in {1,2,3,4,5,6,7,8,9}{
+            \draw[line width=.2pt, stormblauw] ({log10(\x) + \ee},0) -- ({log10(\x) + \ee},\ydecades);
+        }
+    \draw[line width = .5pt, nachtblauw] (\ee,0) -- (\ee,\ydecades);
+    };%
+    \draw[line width = .5pt, nachtblauw] (\xdecades, 0) -- (\xdecades, \ydecades);
+    \foreach \ydecade in{0,...,\numexpr\ydecades - 1\relax}{
+        \foreach \y in {1,2,3,4,5,6,7,8,9}{
+            \draw[line width=.2pt, stormblauw] (0, {\ydecade + log10(\y)}) -- (\xdecades, {\ydecade + log10(\y)});
+        }
+    \draw[line width = .5pt, nachtblauw] (0, \ydecade) -- (\xdecades, \ydecade);
+    };
+    \draw[line width = .5pt, nachtblauw] (0, \ydecades) -- (\xdecades, \ydecades);
+\end{tikzpicture}%
+\hfill\vfill
+
+\pagebreak
+\newcount\xdecades
+\xdecades 5\relax
+\newcount\ydecades
+\numdivisions{\vdivs}{\textheight}{1cm}
+\ydecades\vdivs
+\newdimen\xlogscale
+\xlogscale\textwidth\divide\xlogscale by\xdecades\relax
+\newdimen\ylogscale
+\ylogscale 1cm\relax
+\noindent\hfill
+\begin{tikzpicture}[x=\xlogscale, y=\ylogscale, semitransparent]
+    \foreach \ee in{0,...,\numexpr\xdecades - 1\relax}{
+        \foreach \x in {1,2,3,4,5,6,7,8,9}{
+            \draw[line width=.2pt, stormblauw] ({log10(\x) + \ee},0) -- ({log10(\x) + \ee},\ydecades);
+        }
+    \draw[line width = .5pt, nachtblauw] (\ee,0) -- (\ee,\ydecades);
+    };%
+    \draw[line width = .5pt, nachtblauw] (\xdecades, 0) -- (\xdecades, \ydecades);
+    \foreach \ydecade in{0,...,\numexpr\ydecades - 1\relax}{
+        \foreach \y in {1,2,3,4,6,7,8,9}{
+            \draw[line width=.1pt, mistblauw!50!stormblauw] (0, {\ydecade + \y / 10}) -- (\xdecades, {\ydecade + \y / 10});
+        };
+        \draw[line width = .2pt, stormblauw] (0, {\ydecade + .5}) -- (\xdecades, {\ydecade + .5});
+        \draw[line width = .5pt, nachtblauw] (0, \ydecade) -- (\xdecades, \ydecade);
+    };
+    \draw[line width = .5pt, nachtblauw] (0, \ydecades) -- (\xdecades, \ydecades);
+\end{tikzpicture}%
+\hfill\vfill
+
+\pagebreak
+\newcount\xdecades
+\xdecades 5\relax
+\newcount\ydecades
+\numdivisions{\vdivs}{\textheight}{1cm}
+\ydecades\vdivs
+\newdimen\xlogscale
+\xlogscale\textwidth\divide\xlogscale by\xdecades\relax
+\newdimen\ylogscale
+\ylogscale 1cm\relax
+\noindent\hfill
+\newcount\ysep
+\ysep 3\relax
+\newcount\ybottom
+\ybottom 9\relax
+\newcount\ytop
+\ytop\numexpr\ybottom+\ysep\relax
+\begin{tikzpicture}[x=\xlogscale, y=\ylogscale, semitransparent]
+    \foreach \ee in{0,...,\numexpr\xdecades - 1\relax}{
+        \foreach \x in {1,2,3,4,5,6,7,8,9}{
+            \draw[line width=.2pt, stormblauw] ({log10(\x) + \ee},0) -- ({log10(\x) + \ee},\ybottom);
+            \draw[line width=.2pt, stormblauw] ({log10(\x) + \ee},\ytop) -- ({log10(\x) + \ee},\ydecades);
+        }
+    \draw[line width = .5pt, nachtblauw] (\ee,0) -- (\ee,\ydecades);
+    };%
+    \draw[line width = .5pt, nachtblauw] (\xdecades, 0) -- (\xdecades, \ydecades);
+    \foreach \ydecade in{\ytop,...,\numexpr\ydecades - 1\relax}{
+        \foreach \y in {1,2,3,4,6,7,8,9}{
+            \draw[line width=.1pt, mistblauw!50!stormblauw] (0, {\ydecade + \y / 10}) -- (\xdecades, {\ydecade + \y / 10});
+        };
+        \draw[line width = .2pt, stormblauw] (0, {\ydecade + .5}) -- (\xdecades, {\ydecade + .5});
+        \draw[line width = .5pt, nachtblauw] (0, \ydecade) -- (\xdecades, \ydecade);
+    };
+    \draw[line width = .5pt, nachtblauw] (0, \ydecades) -- (\xdecades, \ydecades);
+    \foreach \ydecade in{0,...,\numexpr\ybottom - 1\relax}{
+        %\draw[line width = .2pt, stormblauw] (0, {\ydecade + .5}) -- (\xdecades, {\ydecade + .5});
+        \draw[line width = .5pt, nachtblauw] (0, \ydecade) -- (\xdecades, \ydecade);
+    };
+    \draw[line width = .5pt, nachtblauw] (0, \ybottom) -- (\xdecades, \ybottom);
+\end{tikzpicture}%
+\hfill\vfill
+
 \end{document}

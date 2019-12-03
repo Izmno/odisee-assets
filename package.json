@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Collection of assets for Odisee University College",
   "scripts": {
-    "build": "make",
+    "build": "make && node makefonts.js",
     "clean": "make clean"
   },
   "repository": {
